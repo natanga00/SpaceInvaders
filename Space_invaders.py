@@ -175,3 +175,4 @@ while running:
     player(player_X, player_Y)
     show_score(scoreX, scoreY)
     pygame.display.update()
+

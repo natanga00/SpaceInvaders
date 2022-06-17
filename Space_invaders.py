@@ -3,10 +3,12 @@ from GameWrapper import GameWrapper
 from Player import Player
 from Bullet import Bullet
 from Invader import Invader
+from Phase import Phase
 
 PygameWrapper = GameWrapper(pygame)
 Player = Player(PygameWrapper.game.image.load('data/spaceship.png'))
 Bullet = Bullet(PygameWrapper.game.image.load('data/bullet.png'), PygameWrapper.game.mixer.Sound('data/bullet.wav'))
+Phase = Phase()
 
 score = 0
 player_position_x_change = 0
@@ -43,12 +45,11 @@ while playing:
             if event.key == PygameWrapper.game.K_SPACE:
 
                 # Fixing the change of direction of bullet
-                if Bullet.state == 'carregada':
+                if Bullet.state == 'carregada' and not PygameWrapper.current_game_status in (PygameWrapper.GAME_STATUS_OVER, PygameWrapper.GAME_STATUS_FINISHED) :
                     Bullet.position_x = Player.position_x 
                     PygameWrapper.screen.blit(Bullet.image, (Bullet.position_x, Bullet.position_y))
                     Bullet.state = 'disparada'
                     Bullet.sound.play()
-
 
         if event.type == PygameWrapper.game.KEYUP:
             player_position_x_change = 0
@@ -70,8 +71,13 @@ while playing:
     # movement of the invader
     for i in range(invaders_horde_size):
 
+        if PygameWrapper.current_game_status == PygameWrapper.GAME_STATUS_FINISHED:
+             PygameWrapper.finished_game()
+             break
+
         if invaders_horde[i].position_y >= 450:
             if abs(Player.position_x - invaders_horde[i].position_x) < 80:
+
                 for j in range(invaders_horde_size):
                     invaders_horde[j].position_y = 2000
                     explosion_sound = PygameWrapper.game.mixer.Sound('data/explosion.wav')
@@ -88,6 +94,10 @@ while playing:
 
         if hasCollided:
             score += 1
+            
+            if not Phase.change_phase(score):
+                PygameWrapper.finished_game()
+                break
 
             Bullet.position_y = 600
             Bullet.state = "carregada"
@@ -103,5 +113,6 @@ while playing:
 
     PygameWrapper.screen.blit(Player.playerImage, (Player.position_x - 16, Player.position_y + 10))
 
-    PygameWrapper.display_score(score)
+    PygameWrapper.display_info_on_screen("Pontos: " + str(score), (5, 5))
+    PygameWrapper.display_info_on_screen("Level: " + str(Phase.current_phase), (720, 5))
     PygameWrapper.game.display.update()

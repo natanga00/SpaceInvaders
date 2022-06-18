@@ -1,7 +1,7 @@
 class Phase:
     def __init__(self, quantity_of_levels = 4, points_per_level = [25, 80, 150, 200]):
         self.phases = []
-        self.current_phase = 0
+        self.current_phase = 4
         self.quantity_of_levels = quantity_of_levels
         self.points_per_level = points_per_level
 

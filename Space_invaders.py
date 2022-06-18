@@ -6,10 +6,14 @@ from Invader import Invader
 from Phase import Phase
 
 PygameWrapper = GameWrapper(pygame)
-Player = Player(PygameWrapper.game.image.load('data/spaceship.png'))
-Bullet = Bullet(PygameWrapper.game.image.load('data/bullet.png'), PygameWrapper.game.mixer.Sound('data/bullet.wav'))
+Player = Player(PygameWrapper.game.image.load('data/spacial_chip1.png'))
 Phase = Phase()
-
+if Phase.current_phase == 3:
+    Bullet = Bullet(PygameWrapper.game.image.load('data/bala1-removebg-preview.png'), PygameWrapper.game.mixer.Sound('data/bullet.wav'))
+elif Phase.current_phase == 4:
+    Bullet = Bullet(PygameWrapper.game.image.load('data/bullet2.png'), PygameWrapper.game.mixer.Sound('data/bullet.wav'))
+else:
+    Bullet = Bullet(PygameWrapper.game.image.load('data/bullet.png'), PygameWrapper.game.mixer.Sound('data/bullet.wav'))
 score = 0
 player_position_x_change = 0
 
@@ -43,6 +47,7 @@ while playing:
             if event.key == PygameWrapper.game.K_RIGHT:
                 player_position_x_change = 1.7
             if event.key == PygameWrapper.game.K_SPACE:
+
 
                 # Fixing the change of direction of bullet
                 if Bullet.state == 'carregada' and not PygameWrapper.current_game_status in (PygameWrapper.GAME_STATUS_OVER, PygameWrapper.GAME_STATUS_FINISHED) :
@@ -93,8 +98,12 @@ while playing:
         hasCollided = PygameWrapper.objectsCollided({'x': Bullet.position_x, 'y': Bullet.position_y}, {'x': invaders_horde[i].position_x, 'y': invaders_horde[i].position_y})
 
         if hasCollided:
-            score += 1
-            
+            if Phase.current_phase ==3:
+                score +=4
+            elif Phase.current_phase ==4:
+                score +=8
+            else:
+                score +=1
             if not Phase.change_phase(score):
                 PygameWrapper.finished_game()
                 break

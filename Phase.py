@@ -1,12 +1,11 @@
 class Phase:
     def __init__(self, quantity_of_levels = 4, points_per_level = [25, 80, 150, 200]):
         self.phases = []
-        self.current_phase = 4
+        self.current_phase = 2
         self.quantity_of_levels = quantity_of_levels
         self.points_per_level = points_per_level
 
         self.setup_phases()
-
     def setup_phases(self):
         if len(self.points_per_level) != self.quantity_of_levels:
             raise Exception("A configuração de fases está incorreta, ajustar a relação de fases com a pontuação")

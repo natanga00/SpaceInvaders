@@ -9,6 +9,6 @@ class Player:
     
     def restrict_player_moviment(self):
         if self.position_x <= 16:
-            self.position_x = 16;
+            self.position_x = 16
         elif self.position_x >= 750:
             self.position_x = 750

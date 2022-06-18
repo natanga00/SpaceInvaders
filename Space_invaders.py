@@ -1,4 +1,6 @@
+import Background as Background
 import pygame
+import sys
 from GameWrapper import GameWrapper 
 from Player import Player
 from Bullet import Bullet
@@ -9,31 +11,28 @@ from Background import Background
 PygameWrapper = GameWrapper(pygame)
 Player = Player(PygameWrapper.game.image.load('data/nave.png'))
 score = 0
+Phase = Phase()
 
 if Phase.current_phase == 1:
     BackGround = Background('data/Design sem nome.png', [0,0])
     Bullet = Bullet(PygameWrapper.game.image.load('data/bullet.png'), PygameWrapper.game.mixer.Sound('data/bullet.wav'))
     alien = 'data/alien1.png'
     score = 0
-
 elif Phase.current_phase == 2:
     BackGround = Background('data/Design sem nome1.png', [0,0])
     Bullet = Bullet(PygameWrapper.game.image.load('data/bullet.png'), PygameWrapper.game.mixer.Sound('data/bullet.wav'))
     alien = 'data/alien2.png'
     score = 26
-
 elif Phase.current_phase == 3:
     BackGround = Background('data/Design sem nome2.png', [0,0])
     Bullet = Bullet(PygameWrapper.game.image.load('data/bala1-removebg-preview.png'), PygameWrapper.game.mixer.Sound('data/bullet.wav'))
     alien = 'data/alien3.png'
     score = 81
-
 elif Phase.current_phase == 4:
     BackGround = Background('data/Design sem nome3.png', [0,0])
     Bullet = Bullet(PygameWrapper.game.image.load('data/bullet2.png'), PygameWrapper.game.mixer.Sound('data/bullet.wav'))
     alien = 'data/alien4.png'
     score = 151
-
 score = 0
 player_position_x_change = 0
 
